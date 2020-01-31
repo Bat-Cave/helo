@@ -22,6 +22,7 @@ app.use(session({
 
 app.post('/api/register', ctrl.register);
 app.post('/api/login', ctrl.login);
+app.get('/api/posts', ctrl.getPosts);
 
 
 massive(CONNECTION_STRING).then(db => {

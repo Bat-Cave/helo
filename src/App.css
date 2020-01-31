@@ -59,7 +59,95 @@ p{
 .nav-container{
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  padding: 40px 4px;
   width: 100px;
   height: 100vh;
   background-image: linear-gradient(0deg,#ff7abe,#ff9770);
+}
+
+.nav-top{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-top img{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.dashboard-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: calc(100vw - 100px);
+  height: 100vh;
+  background: rebeccapurple;
+  margin-left: 100px;
+  padding: 40px;
+}
+
+.dashboard-search{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 100px;
+  background: white;
+  margin: 20px 0;
+}
+
+.dashboard-search input{
+  width: 40%;
+}
+
+.dashboard-search button{
+  padding: 0 8px;
+  margin-left: 20px;
+}
+
+.dashboard-search p{
+  color: black;
+}
+
+.my-posts{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  margin: 0 20px;
+
+}
+
+.dashboard-posts{
+  width: 70%;
+  height: auto;
+  min-height: calc(100vh - 220px);
+  background: white;
+}
+
+.post{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 20px);
+  height: 100px;
+  background: lightcoral;
+  margin: 10px 10px 0 10px;
+  padding: 0 30px;
+}
+
+.author-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: auto;
+  height: 80%;
+  padding: 5px;
 }
