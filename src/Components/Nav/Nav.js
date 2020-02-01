@@ -8,12 +8,11 @@ class Nav extends Component {
     super(props)
 
     this.state = {
-
+      
     }
   }
 
   render(){
-    console.log(this.props);
     if (this.props.location.pathname !== '/') {
       return (
         <div className='nav-container'>

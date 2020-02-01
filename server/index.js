@@ -23,6 +23,10 @@ app.use(session({
 app.post('/api/register', ctrl.register);
 app.post('/api/login', ctrl.login);
 app.get('/api/posts', ctrl.getPosts);
+app.get('/api/post/:id', ctrl.getPost);
+app.post('/api/new/:id', ctrl.createPost);
+app.delete('/api/post/:id', ctrl.deletePost)
+app.post('/api/auth/logout', ctrl.logout);
 
 
 massive(CONNECTION_STRING).then(db => {

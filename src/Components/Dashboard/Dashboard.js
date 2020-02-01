@@ -41,8 +41,9 @@ class Dashboard extends Component {
       url += `?mine=true&search=${search}`;
     }
     axios.get(url)
-      .then(res => {
-        this.setState({ posts: res.data , search: ''})
+    .then(res => {
+      this.setState({ posts: res.data , search: ''})
+      console.log(res.data)
       })
   }
 
@@ -60,13 +61,13 @@ class Dashboard extends Component {
 
   render(){
     let posts = this.state.posts.map((post) => {
-      console.log(post);
+      console.log(post.id);
       return(
         <Link to={`/post/${post.id}`} key={post.id}>
         <div className='post'>
           <h3>{post.title}</h3>
           <div className='author-container'>
-            <p>by {post.author_username}</p>
+            <p>by {post.username}</p>
             <img src={post.profile_pic} alt='author' />
           </div>
         </div>
@@ -75,7 +76,7 @@ class Dashboard extends Component {
     })
 
     return(
-      <div className='dashboard-container'>
+      <div className='container'>
         <div className='dashboard-search'>
           <input type='text' name='search' onChange={e => this.handleSearch(e.target.name, e.target.value)}/>
           <button onClick={this.getPosts}>Search</button>

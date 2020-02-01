@@ -39,6 +39,7 @@ module.exports = {
 
       req.session.user = user[0];
       res.status(202).send(req.session.user);
+      console.log(req.session)
     },
     getPosts: async (req, res) => {
       const {mine, search} = req.query;
@@ -47,5 +48,33 @@ module.exports = {
 
       const posts = await db.get_posts();
       res.status(200).send(posts);
+    },
+    getPost: async (req, res) => {
+      const {id} = req.params
+      const db = req.app.get('db');
+      const post = await db.get_post(id)
+      res.status(200).send(post)
+    },
+    createPost: async (req, res) => {
+      const {titleInput, imgInput, contentInput} = req.body
+      const {id} = req.params;
+      if(!id){
+        return res.status(403).send('Please log in');
+      }
+      const db = req.app.get('db');
+      const success = await db.create_post(titleInput, imgInput, contentInput, id)
+      console.log(success);
+      res.sendStatus(200);
+    },
+    deletePost: async (req, res) => {
+      const {id} = req.params
+      const db = req.app.get('db')
+
+      const complete = await db.delete_post(id);
+      res.sendStatus(200);
+    },
+    logout: (req, res) => {
+      req.session.destroy();
+      res.sendStatus(200);
     }
   }
