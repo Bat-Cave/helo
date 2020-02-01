@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
 import axios from 'axios';
 
 class Dashboard extends Component {
@@ -61,7 +60,7 @@ class Dashboard extends Component {
 
   render(){
     let posts = this.state.posts.map((post) => {
-      console.log(post.id);
+      console.log(post);
       return(
         <Link to={`/post/${post.id}`} key={post.id}>
         <div className='post'>
@@ -93,8 +92,5 @@ class Dashboard extends Component {
     )
   }
 }
-function mapStateToProps(state) {
-  return state;
-}
 
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

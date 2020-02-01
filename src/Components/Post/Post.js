@@ -32,7 +32,7 @@ class Post extends Component {
   }
 
   delete = () => {
-    axios.delete(`/api/post/${this.props.match.params.id}`)
+    axios.delete(`/api/post/${this.props.key}`)
     .then(res => this.props.history.push('/dashboard'))
   }
 

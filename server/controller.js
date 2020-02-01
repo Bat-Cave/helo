@@ -20,6 +20,7 @@ module.exports = {
         console.log(`Created new user. Received ${newUser}`);
 
         req.session.user = newUser[0];
+        console.log(req.session.user);
         console.log('Created user on session')
         res.status(201).send(req.session.user);
     },
@@ -38,6 +39,7 @@ module.exports = {
       delete user[0].password;
 
       req.session.user = user[0];
+      console.log(req.session);
       res.status(202).send(req.session.user);
       console.log(req.session)
     },
@@ -57,7 +59,7 @@ module.exports = {
     },
     createPost: async (req, res) => {
       const {titleInput, imgInput, contentInput} = req.body
-      const {id} = req.params;
+      const {id} = req.session.user;
       if(!id){
         return res.status(403).send('Please log in');
       }
@@ -67,7 +69,7 @@ module.exports = {
       res.sendStatus(200);
     },
     deletePost: async (req, res) => {
-      const {id} = req.params
+      const {id} = req.session.user
       const db = req.app.get('db')
 
       const complete = await db.delete_post(id);
@@ -76,5 +78,13 @@ module.exports = {
     logout: (req, res) => {
       req.session.destroy();
       res.sendStatus(200);
+    },
+    getMe: (req, res) => {
+      const {id} = req.session.user;
+      const db = req.app.get('db');
+
+      const userInfo = db.get_me(id);
+      console.log(id);
+      res.status(200).send(userInfo);
     }
   }

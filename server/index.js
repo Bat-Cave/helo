@@ -24,9 +24,10 @@ app.post('/api/register', ctrl.register);
 app.post('/api/login', ctrl.login);
 app.get('/api/posts', ctrl.getPosts);
 app.get('/api/post/:id', ctrl.getPost);
-app.post('/api/new/:id', ctrl.createPost);
+app.post('/api/new/', ctrl.createPost);
 app.delete('/api/post/:id', ctrl.deletePost)
 app.post('/api/auth/logout', ctrl.logout);
+app.get('/api/auth/me', ctrl.getMe);
 
 
 massive(CONNECTION_STRING).then(db => {

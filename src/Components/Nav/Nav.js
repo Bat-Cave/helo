@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import axios from 'axios';
+import {updateUser} from '../../dux/reducer';
 
 
 class Nav extends Component {
@@ -10,6 +12,17 @@ class Nav extends Component {
     this.state = {
       
     }
+  }
+
+  componentDidMount(){
+    axios.get('/api/auth/me').then(res => {
+      console.log(res.data);
+      this.props.updateUser(res.data)
+    })
+  }
+
+  logout(){
+    axios.post('/api/auth/logout');
   }
 
   render(){
@@ -25,7 +38,7 @@ class Nav extends Component {
               <p>Post</p>
             </Link>
           </div>
-          <Link to='/'>
+          <Link to='/' onClick={this.logout}>
             <p>Logout</p>
           </Link>
         </div>
@@ -40,4 +53,4 @@ function mapStateToProps(state) {
   return state;
 }
 
-export default withRouter(connect(mapStateToProps)(Nav));
+export default withRouter(connect( mapStateToProps, {updateUser})(Nav));
