@@ -42,10 +42,23 @@ module.exports = {
     getPosts: async (req, res) => {
       const {mine, search} = req.query;
       const db = req.app.get('db');
+      const {id} = req.session.user;
+      console.log(`Mine: ${mine}`)
+      console.log(`Search: ${search}`)
 
-
-      const posts = await db.get_posts();
-      res.status(200).send(posts);
+      if(mine && !search){
+        const posts = await db.get_posts_mine(id)
+        res.status(200).send(posts);
+      } else if(!mine && search){
+        const posts = await db.get_posts_search(search)
+        res.status(200).send(posts);
+      } else if (mine && search){
+        const posts = await db.get_posts_mine_search(id, search)
+        res.status(200).send(posts);
+      } else {
+        const posts = await db.get_posts();
+        res.status(200).send(posts);
+      }
     },
     getPost: async (req, res) => {
       const {id} = req.params
@@ -64,7 +77,7 @@ module.exports = {
       res.sendStatus(200);
     },
     deletePost: async (req, res) => {
-      const {id} = req.session.user
+      const {id} = req.params
       const db = req.app.get('db')
 
       const complete = await db.delete_post(id);
@@ -75,12 +88,14 @@ module.exports = {
       res.sendStatus(200);
     },
     getMe: async (req, res) => {
-      const {id} = req.session.user;
-      console.log(req.session.user)
-      const db = req.app.get('db');
-
-      const userInfo = await db.get_me(id);
-      console.log(userInfo);
-      res.status(200).send(userInfo);
+      if(req.session.user){
+        const {id} = req.session.user;
+        const db = req.app.get('db');
+        console.log('Hit get user')
+        const userInfo = await db.get_me(id);
+        res.status(200).send(userInfo[0]);
+      } else {
+        res.status(402).send('User not found');
+      }
     }
   }

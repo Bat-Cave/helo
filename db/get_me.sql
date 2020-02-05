@@ -1,1 +1,1 @@
-select * from users where id = $1;
+select id, username, profile_pic from users where id = $1;

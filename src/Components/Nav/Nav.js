@@ -6,19 +6,19 @@ import {updateUser} from '../../dux/reducer';
 
 
 class Nav extends Component {
-  constructor(props){
-    super(props)
 
-    this.state = {
-      
-    }
+  getMe(){
+    axios.get('/api/auth/me').then(res => {
+      this.props.updateUser(res.data)
+    })
   }
 
   componentDidMount(){
-    axios.get('/api/auth/me').then(res => {
-      console.log(res.data);
-      this.props.updateUser(res.data)
-    })
+    this.getMe();
+  }
+  
+  componentDidUpdate(){
+    this.getMe();
   }
 
   logout(){
@@ -31,6 +31,7 @@ class Nav extends Component {
         <div className='nav-container'>
           <div className='nav-top'>
             <img src={this.props.profile_pic || 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'} alt='Profile Pic'/>
+            <p>Hello, {this.props.username}!</p>
             <Link to='/dashboard'>
               <p>Home</p>
             </Link>

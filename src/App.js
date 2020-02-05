@@ -8,14 +8,14 @@ import store from './dux/store';
 
 function App() {
   return (
-    <Provider store={store}>
       <HashRouter>
+    <Provider store={store}>
         <div className="component-container">
           <Nav />
           {routes}
         </div>
-      </HashRouter>
     </Provider>
+      </HashRouter>
   );
 }
 

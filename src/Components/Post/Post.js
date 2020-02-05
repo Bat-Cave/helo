@@ -7,6 +7,7 @@ class Post extends Component {
     super(props)
 
     this.state = {
+      postId: null,
       postTitle: '',
       postImage: '',
       postContent: '',
@@ -19,9 +20,10 @@ class Post extends Component {
     console.log(this.props)
     axios.get(`/api/post/${this.props.match.params.id}`)
       .then(res => {
-        const {title, img, content, username, profile_pic} = res.data[0];
+        const {id, title, img, content, username, profile_pic} = res.data[0];
         console.log(res.data);
         this.setState({ 
+          postId: id,
           postTitle: title, 
           postImage: img,
           postContent: content,
@@ -32,7 +34,7 @@ class Post extends Component {
   }
 
   delete = () => {
-    axios.delete(`/api/post/${this.props.key}`)
+    axios.delete(`/api/post/${this.state.postId}`)
     .then(res => this.props.history.push('/dashboard'))
   }
 

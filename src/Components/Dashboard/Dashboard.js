@@ -34,6 +34,7 @@ class Dashboard extends Component {
     let url = '/api/posts';
     if (mine && !search) {
       url += '?mine=true';
+      console.log('Getting My Posts')
     } else if (!mine && search) {
       url += `?search=${search}`;
     } else if (mine && search) {
@@ -46,12 +47,9 @@ class Dashboard extends Component {
       })
   }
 
-  reset() {
-    let { mine } = this.state;
+  reset = () => {
     let url = '/api/posts';
-    if (mine) {
-      url += '?mine=true';
-    }
+    this.setState({mine: false, search: ''})
     axios.get(url)
       .then(res => {
         this.setState({ posts: res.data, search: '' })
@@ -66,7 +64,7 @@ class Dashboard extends Component {
           <h3>{post.title}</h3>
           <div className='author-container'>
             <p>by {post.username}</p>
-            <img src={post.profile_pic} alt='author' />
+            <img src={post.profile_pic || 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'} alt='author' />
           </div>
         </div>
       </Link>
@@ -76,7 +74,7 @@ class Dashboard extends Component {
     return(
       <div className='container'>
         <div className='dashboard-search'>
-          <input type='text' name='search' onChange={e => this.handleSearch(e.target.name, e.target.value)}/>
+          <input type='text' name='search' value={this.state.search} onChange={e => this.handleSearch(e.target.name, e.target.value)}/>
           <button onClick={this.getPosts}>Search</button>
           <button onClick={this.reset}>Reset</button>
           <div className='my-posts'>
